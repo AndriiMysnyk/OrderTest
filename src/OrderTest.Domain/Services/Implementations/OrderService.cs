@@ -6,6 +6,6 @@ internal class OrderService : IOrderService
 {
     public async Task<IEnumerable<Order>> GetAll()
     {
-        return new[] { new Order() };
+        return new[] { new Order("Description", new[] { "Test order line" }, new(10, Currency.USD)) };
     }
 }
