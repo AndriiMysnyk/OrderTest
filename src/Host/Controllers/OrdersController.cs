@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 using OrderTest.Domain.Orders;
-using OrderTest.Domain.Services;
+using OrderTest.Read.Services;
 
 namespace OrderTest.Host.Controllers
 {
@@ -10,11 +10,11 @@ namespace OrderTest.Host.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly ILogger<OrdersController> _logger;
-        private readonly IOrderService _orderService;
+        private readonly IOrderReadService _orderService;
 
         public OrdersController(
             ILogger<OrdersController> logger,
-            IOrderService orderService)
+            IOrderReadService orderService)
         {
             _logger = logger;
             _orderService = orderService;

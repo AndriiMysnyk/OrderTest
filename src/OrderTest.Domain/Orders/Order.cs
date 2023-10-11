@@ -1,8 +1,8 @@
 ﻿namespace OrderTest.Domain.Orders;
 
-public class Order
+public sealed class Order
 {
-    public Order(string description, IEnumerable<string> items, Money price)
+    public Order(string description, IEnumerable<OrderItem> items)
     {
         if (string.IsNullOrWhiteSpace(description))
         {
@@ -14,16 +14,10 @@ public class Order
             throw new ArgumentException($"{nameof(Order)} {nameof(items)} should not be empty.");
         }
 
-        if (price is null)
-        {
-            throw new ArgumentException($"{nameof(Order)} {nameof(price)} should not be null.");
-        }
-
         Id = Guid.NewGuid();
         Status = OrderStatus.Prepared;
         Description = description;
         Items = items;
-        Price = price;
     }
 
     public Guid Id { get; }
@@ -32,13 +26,11 @@ public class Order
 
     public string Description { get; }
 
-    public Money Price { get; }
-
     public DateTime? SubmissionDate { get; private set; }
 
     public DateTime? PaymentDate { get; private set; }
 
-    public IEnumerable<string> Items { get; }
+    public IEnumerable<OrderItem> Items { get; }
 
     public void Submit()
     {
@@ -80,5 +72,11 @@ public class Order
         }
 
         Status = OrderStatus.Cancelled;
+    }
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    private Order()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    {
     }
 }

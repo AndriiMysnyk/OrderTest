@@ -1,4 +1,4 @@
-using OrderTest.Domain;
+using OrderTest.Persistance;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,7 +6,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDomain();
+builder.Services.AddPersistance();
+builder.Services.AddRead();
 
 var app = builder.Build();
 

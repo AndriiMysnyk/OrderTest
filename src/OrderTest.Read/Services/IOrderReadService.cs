@@ -1,8 +1,8 @@
 ﻿using OrderTest.Domain.Orders;
 
-namespace OrderTest.Domain.Services;
+namespace OrderTest.Read.Services;
 
-public interface IOrderService
+public interface IOrderReadService
 {
     Task<IEnumerable<Order>> GetAll();
 }

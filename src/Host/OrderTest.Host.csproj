@@ -12,7 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OrderTest.Domain\OrderTest.Domain.csproj" />
+    <ProjectReference Include="..\OrderTest.Persistance\OrderTest.Persistance.csproj" />
+    <ProjectReference Include="..\OrderTest.Read\OrderTest.Read.csproj" />
   </ItemGroup>
 
 </Project>
