@@ -11,6 +11,6 @@ internal class OrderTranslator : IOrderTranslator
             domainOrder.Status,
             domainOrder.SubmissionDate,
             domainOrder.PaymentDate,
-            domainOrder.Items.Items.Select(i => new OrderItem(i.Description, new Money(i.Price.Amount, i.Price.Currency))).ToList().AsReadOnly(),
-            new Money(domainOrder.Items.OverallPrice.Amount, domainOrder.Items.OverallPrice.Currency));
+            domainOrder.Items.Select(i => new OrderItem(i.Description, new Money(i.Price.Amount, i.Price.Currency), i.Count)).ToList().AsReadOnly(),
+            domainOrder.OverallPrice is not null ? new Money(domainOrder.OverallPrice.Amount, domainOrder.OverallPrice.Currency) : null);
 }

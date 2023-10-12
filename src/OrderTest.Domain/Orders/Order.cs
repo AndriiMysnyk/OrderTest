@@ -4,22 +4,17 @@ namespace OrderTest.Domain.Orders;
 
 public sealed class Order
 {
-    public Order(string description, OrderItemCollection items)
+    public Order(string description)
     {
         if (string.IsNullOrWhiteSpace(description))
         {
             throw new ArgumentException($"{nameof(Order)} {nameof(description)} should not be null or empty.");
         }
 
-        if (items is null)
-        {
-            throw new ArgumentNullException($"{nameof(Order)} {nameof(items)} should not be null.");
-        }
-
         Id = Guid.NewGuid();
         Status = OrderStatus.Created;
         Description = description;
-        Items = items;
+        _items = new List<OrderItem>();
     }
 
     public Guid Id { get; }
@@ -32,7 +27,26 @@ public sealed class Order
 
     public DateTime? PaymentDate { get; private set; }
 
-    public OrderItemCollection Items { get; }
+    public List<OrderItem> _items;
+    public IReadOnlyCollection<OrderItem> Items { get { return _items; } }
+
+    public Money? OverallPrice { get; private set; }
+
+    public void Additem(OrderItem item)
+    {
+        if (Status is not OrderStatus.Created)
+        {
+            throw new InvalidOperationException($"The order items can not be added when order is in '{Status}' status.");
+        }
+
+        if (_items.Any() && _items.GroupBy(i => i.Price.Currency).Count() > 1)
+        {
+            throw new ArgumentException($"{nameof(Order)} {nameof(item)} prices should be in one currency.");
+        }
+
+        _items.Add(item);
+        OverallPrice = CalculateOverallPrice();
+    }
 
     public void Submit()
     {
@@ -74,6 +88,11 @@ public sealed class Order
         }
 
         Status = OrderStatus.Cancelled;
+    }
+
+    private Money? CalculateOverallPrice()
+    {
+        return _items.Any() ? _items.Select(i => i.Price * i.Count).Aggregate((a, b) => a + b) : null;
     }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

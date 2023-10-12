@@ -1,5 +1,6 @@
 ﻿using OrderTest.Contract;
 using OrderTest.Domain.Orders;
+using OrderTest.Write.Exceptions;
 using OrderTest.Write.Repositories;
 
 namespace OrderTest.Write.Services.Implementation;
@@ -15,14 +16,25 @@ internal class OrderWriteService : IOrderWriteService
 
     public async Task Create(string description)
     {
-        Order order = new Order(
-            description,
-            new OrderItemCollection(
-                new[] {
-                    new OrderItem("Cup of coffe", new(10, Currency.USD))
-                }
-            ));
+        Order order = new Order(description);
         await _repository.Create(order);
+    }
+
+    public async Task AddItem(Guid orderId, string description, decimal amount, Currency currency, int count = 1)
+    {
+        Order? order = await _repository.Find(orderId);
+        if (order is null)
+        {
+            throw new OrderNotFoundException(orderId);
+        }
+
+        order.Additem(
+            new OrderItem(
+                description,
+                new Money(amount, currency))
+            );
+
+        _repository.CommitChanges();
     }
 
     public async Task ChangeStatus(Guid orderId, OrderStatus orderStatus)
@@ -30,7 +42,7 @@ internal class OrderWriteService : IOrderWriteService
         Order? order = await _repository.Find(orderId);
         if (order is null)
         {
-            return;
+            throw new OrderNotFoundException(orderId);
         }
 
         switch (orderStatus)
@@ -45,6 +57,7 @@ internal class OrderWriteService : IOrderWriteService
                 order.Cancel();
                 break;
         }
+
         _repository.CommitChanges();
     }
 }

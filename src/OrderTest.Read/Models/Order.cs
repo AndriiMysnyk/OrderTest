@@ -11,7 +11,7 @@ public class Order
         DateTime? submissionDate,
         DateTime? paymentDate,
         IReadOnlyCollection<OrderItem> items,
-        Money overallPrice)
+        Money? overallPrice)
     {
         Id = id;
         Description = description;
@@ -34,5 +34,5 @@ public class Order
 
     public IReadOnlyCollection<OrderItem> Items { get; }
 
-    public Money OverallPrice { get; }
+    public Money? OverallPrice { get; }
 }

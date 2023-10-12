@@ -22,7 +22,12 @@ internal class OrderTypeConfiguration : IEntityTypeConfiguration<Order>
             .IsRequired();
 
         builder
-            .OwnsOne(e => e.Items, e => e.ConfigureOrderItemCollection())
+            .OwnsOne(e => e.OverallPrice, e => e.ConfigureMoney())
+            .Navigation(e => e.OverallPrice)
+            .IsRequired();
+
+        builder
+            .OwnsMany(x => x.Items, i => i.ConfigureOrderItem())
             .Navigation(x => x.Items)
             .UsePropertyAccessMode(PropertyAccessMode.Field);
     }

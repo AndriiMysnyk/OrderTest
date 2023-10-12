@@ -4,7 +4,7 @@ namespace OrderTest.Domain.Orders;
 
 public sealed record OrderItem
 {
-    public OrderItem(string description, Money price)
+    public OrderItem(string description, Money price, int count = 1)
     {
         if (string.IsNullOrWhiteSpace(description))
         {
@@ -18,11 +18,14 @@ public sealed record OrderItem
 
         Description = description;
         Price = price;
+        Count = count;
     }
 
     public string Description { get; }
 
     public Money Price { get; }
+
+    public int Count { get; }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private OrderItem()

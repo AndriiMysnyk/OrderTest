@@ -33,7 +33,6 @@ namespace OrderTest.Host.Controllers
         public async Task<ActionResult<IEnumerable<Order>>> Get(Guid id)
         {
             Order? result = await _orderReadService.Find(id);
-
             return result is not null ? Ok(result) : NotFound();
         }
 
@@ -44,9 +43,17 @@ namespace OrderTest.Host.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        [Route("{id}/items")]
+        public async Task<ActionResult> AddItem(Guid id, string orderItemDescription, decimal amount, int currency, int count)
+        {
+            await _orderWriteService.AddItem(id, orderItemDescription, amount, (Currency)currency, count);
+            return Ok();
+        }
+
         [HttpPut]
         [Route("{id}/status/{status}")]
-        public async Task<ActionResult<IEnumerable<Order>>> SetStatus(Guid id, int status)
+        public async Task<ActionResult> SetStatus(Guid id, int status)
         {
             await _orderWriteService.ChangeStatus(id, (OrderStatus)status);
             return Ok();
