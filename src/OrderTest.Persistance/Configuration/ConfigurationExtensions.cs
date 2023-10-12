@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OrderTest.Domain.Orders;
 
 namespace OrderTest.Persistance.Configuration;
@@ -17,6 +16,10 @@ internal static class ConfigurationExtensions
         builder
             .OwnsOne(e => e.Price, e => e.ConfigureMoney())
             .Navigation(e => e.Price)
+            .IsRequired();
+
+        builder
+            .Property(e => e.Count)
             .IsRequired();
 
         return builder;

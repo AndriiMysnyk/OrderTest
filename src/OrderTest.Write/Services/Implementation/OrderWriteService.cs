@@ -31,7 +31,8 @@ internal class OrderWriteService : IOrderWriteService
         order.Additem(
             new OrderItem(
                 description,
-                new Money(amount, currency))
+                new Money(amount, currency),
+                count)
             );
 
         _repository.CommitChanges();
