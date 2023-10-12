@@ -17,7 +17,7 @@ public sealed class Order
         }
 
         Id = Guid.NewGuid();
-        Status = OrderStatus.Prepared;
+        Status = OrderStatus.Created;
         Description = description;
         Items = items;
     }

@@ -2,7 +2,7 @@
 
 public enum OrderStatus
 {
-    Prepared = 0,
+    Created = 0,
     Submitted,
     Payed,
     Cancelled

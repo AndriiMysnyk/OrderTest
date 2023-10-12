@@ -3,15 +3,17 @@
 using OrderTest.Contract;
 using OrderTest.Domain.Orders;
 using OrderTest.Read.Repositories;
+using OrderTest.Write.Repositories;
 
 namespace OrderTest.Persistance.Implementation;
 
-internal class OrdersRepository : IOrdersReadRepository
+internal class OrdersRepository : IOrdersReadRepository, IOrdersWriteRepository
 {
+    private OrdersContext _context = new OrdersContext();
+
     public OrdersRepository()
     {
-        using OrdersContext context = new();
-        context.Orders.Add(
+        _context.Orders.Add(
             new Order(
                 "Restaurant visit",
                 new OrderItemCollection(
@@ -20,18 +22,27 @@ internal class OrdersRepository : IOrdersReadRepository
                         new OrderItem("Cookie", new(5, Currency.USD))
                     }
                 )));
-        context.SaveChanges();
+        _context.SaveChanges();
     }
 
     public Task<List<Order>> GetAll()
     {
-        using OrdersContext context = new();
-        return context.Orders.ToListAsync();
+        return _context.Orders.ToListAsync();
     }
 
     public Task<Order?> Find(Guid id)
     {
-        using OrdersContext context = new();
-        return context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+        return _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+    }
+
+    public async Task Create(Order order)
+    {
+        await _context.Orders.AddAsync(order);
+        _context.SaveChanges();
+    }
+
+    public void CommitChanges()
+    {
+        _context.SaveChanges();
     }
 }

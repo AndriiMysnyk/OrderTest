@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderTest.Read", "OrderTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderTest.Contract", "OrderTest.Contract\OrderTest.Contract.csproj", "{9F062D78-3DC2-43BC-88F9-6E6C6B51351D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderTest.Write", "OrderTest.Write\OrderTest.Write.csproj", "{7E2DD821-54F1-4966-A6AF-408051CA9D82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{9F062D78-3DC2-43BC-88F9-6E6C6B51351D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F062D78-3DC2-43BC-88F9-6E6C6B51351D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F062D78-3DC2-43BC-88F9-6E6C6B51351D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E2DD821-54F1-4966-A6AF-408051CA9D82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E2DD821-54F1-4966-A6AF-408051CA9D82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E2DD821-54F1-4966-A6AF-408051CA9D82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E2DD821-54F1-4966-A6AF-408051CA9D82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
