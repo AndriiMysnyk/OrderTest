@@ -10,7 +10,8 @@ internal class OrderTypeConfiguration : IEntityTypeConfiguration<Order>
 {
     public void Configure(EntityTypeBuilder<Order> builder)
     {
-        builder.HasKey(p => p.Id);
+        builder
+            .HasKey(p => p.Id);
 
         builder
             .Property(e => e.Status)
@@ -21,7 +22,7 @@ internal class OrderTypeConfiguration : IEntityTypeConfiguration<Order>
             .IsRequired();
 
         builder
-            .OwnsMany(x => x.Items, i => i.ConfigureOrderItem())
+            .OwnsOne(e => e.Items, e => e.ConfigureOrderItemCollection())
             .Navigation(x => x.Items)
             .UsePropertyAccessMode(PropertyAccessMode.Field);
     }

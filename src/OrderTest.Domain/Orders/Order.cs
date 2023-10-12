@@ -2,16 +2,16 @@
 
 public sealed class Order
 {
-    public Order(string description, IEnumerable<OrderItem> items)
+    public Order(string description, OrderItemCollection items)
     {
         if (string.IsNullOrWhiteSpace(description))
         {
             throw new ArgumentException($"{nameof(Order)} {nameof(description)} should not be null or empty.");
         }
 
-        if (items is null || !items.Any())
+        if (items is null)
         {
-            throw new ArgumentException($"{nameof(Order)} {nameof(items)} should not be empty.");
+            throw new ArgumentNullException($"{nameof(Order)} {nameof(items)} should not be null.");
         }
 
         Id = Guid.NewGuid();
@@ -30,7 +30,7 @@ public sealed class Order
 
     public DateTime? PaymentDate { get; private set; }
 
-    public IEnumerable<OrderItem> Items { get; }
+    public OrderItemCollection Items { get; }
 
     public void Submit()
     {

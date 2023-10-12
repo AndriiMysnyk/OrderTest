@@ -7,11 +7,17 @@ internal class OrdersRepository : IOrdersReadRepository
 {
     public OrdersRepository()
     {
-        //using OrdersContext context = new();
-        //context.Orders.Add(
-        //    new Order("Restaurant visit", new[] { new OrderItem("Cup of coffe", new(10, Currency.USD)) })
-        //    );
-        //context.SaveChanges();
+        using OrdersContext context = new();
+        context.Orders.Add(
+            new Order(
+                "Restaurant visit",
+                new OrderItemCollection(
+                    new[] {
+                        new OrderItem("Cup of coffe", new(10, Currency.USD)),
+                        new OrderItem("Cookie", new(5, Currency.USD))
+                    }
+                )));
+        context.SaveChanges();
     }
 
     public IList<Order> GetAll()
