@@ -12,5 +12,6 @@ public static class Extensions
     {
         services.AddScoped<IOrdersReadRepository, OrdersRepository>();
         services.AddScoped<IOrdersWriteRepository, OrdersRepository>();
+        services.AddScoped<IOrdersContext, OrdersContext>();
     }
 }

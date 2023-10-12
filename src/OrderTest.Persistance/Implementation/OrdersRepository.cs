@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+using OrderTest.Contract;
 using OrderTest.Domain.Orders;
 using OrderTest.Read.Repositories;
 using OrderTest.Write.Repositories;
@@ -8,7 +9,12 @@ namespace OrderTest.Persistance.Implementation;
 
 internal class OrdersRepository : IOrdersReadRepository, IOrdersWriteRepository
 {
-    private OrdersContext _context = new OrdersContext();
+    private IOrdersContext _context;
+
+    public OrdersRepository(IOrdersContext context)
+    {
+        _context = context;
+    }
 
     public Task<List<Order>> GetAll()
     {

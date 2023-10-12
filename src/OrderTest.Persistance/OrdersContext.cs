@@ -5,7 +5,7 @@ using OrderTest.Persistance.Configuration;
 
 namespace OrderTest.Persistance;
 
-public class OrdersContext : DbContext
+internal class OrdersContext : DbContext, IOrdersContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
