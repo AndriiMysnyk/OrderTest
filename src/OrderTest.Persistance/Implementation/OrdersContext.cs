@@ -3,7 +3,7 @@
 using OrderTest.Domain.Orders;
 using OrderTest.Persistance.Configuration;
 
-namespace OrderTest.Persistance;
+namespace OrderTest.Persistance.Implementation;
 
 internal class OrdersContext : DbContext, IOrdersContext
 {
