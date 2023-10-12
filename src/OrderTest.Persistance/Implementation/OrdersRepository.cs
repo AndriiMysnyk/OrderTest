@@ -1,4 +1,7 @@
-﻿using OrderTest.Domain.Orders;
+﻿using Microsoft.EntityFrameworkCore;
+
+using OrderTest.Contract;
+using OrderTest.Domain.Orders;
 using OrderTest.Read.Repositories;
 
 namespace OrderTest.Persistance.Implementation;
@@ -20,9 +23,15 @@ internal class OrdersRepository : IOrdersReadRepository
         context.SaveChanges();
     }
 
-    public IList<Order> GetAll()
+    public Task<List<Order>> GetAll()
     {
         using OrdersContext context = new();
-        return context.Orders.ToList();
+        return context.Orders.ToListAsync();
+    }
+
+    public Task<Order?> Find(Guid id)
+    {
+        using OrdersContext context = new();
+        return context.Orders.FirstOrDefaultAsync(o => o.Id == id);
     }
 }

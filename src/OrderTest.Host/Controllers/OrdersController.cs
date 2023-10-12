@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 
-using OrderTest.Domain.Orders;
+using OrderTest.Read.Models;
 using OrderTest.Read.Services;
+
+using System.Net;
 
 namespace OrderTest.Host.Controllers
 {
@@ -9,21 +11,29 @@ namespace OrderTest.Host.Controllers
     [Route("api/orders")]
     public class OrdersController : ControllerBase
     {
-        private readonly ILogger<OrdersController> _logger;
         private readonly IOrderReadService _orderService;
 
         public OrdersController(
-            ILogger<OrdersController> logger,
             IOrderReadService orderService)
         {
-            _logger = logger;
             _orderService = orderService;
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<Order>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<Order>>> GetAll()
         {
             return Ok(await _orderService.GetAll());
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        [ProducesResponseType(typeof(Order), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<IEnumerable<Order>>> Get(Guid id)
+        {
+            Order? result = await _orderService.Find(id);
+
+            return result is not null ? Ok(result) : NotFound();
         }
     }
 }

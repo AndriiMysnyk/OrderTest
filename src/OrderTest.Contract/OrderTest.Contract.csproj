@@ -6,9 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\OrderTest.Contract\OrderTest.Contract.csproj" />
-    <ProjectReference Include="..\OrderTest.Domain\OrderTest.Domain.csproj" />
-  </ItemGroup>
-
 </Project>

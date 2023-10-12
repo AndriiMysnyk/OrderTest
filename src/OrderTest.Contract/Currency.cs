@@ -1,4 +1,4 @@
-﻿namespace OrderTest.Domain.Orders;
+﻿namespace OrderTest.Contract;
 
 public enum Currency
 {

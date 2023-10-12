@@ -1,4 +1,6 @@
-﻿namespace OrderTest.Domain.Orders;
+﻿using OrderTest.Contract;
+
+namespace OrderTest.Domain.Orders;
 
 public sealed class Order
 {

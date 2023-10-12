@@ -4,5 +4,7 @@ namespace OrderTest.Read.Repositories;
 
 public interface IOrdersReadRepository
 {
-    public IList<Order> GetAll();
+    public Task<List<Order>> GetAll();
+
+    public Task<Order?> Find(Guid id);
 }
